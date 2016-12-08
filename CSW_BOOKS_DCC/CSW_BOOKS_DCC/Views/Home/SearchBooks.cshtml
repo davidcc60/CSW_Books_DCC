@@ -1,0 +1,130 @@
+﻿@model List<CSW_BOOKS_DCC.Models.Book>
+@{
+    ViewBag.Title = "Search Books";
+}
+<script type="text/javascript">
+            function listBooks() {
+                location.href = '@Url.Action("SearchBooks", "Home", new { isbn = "", publisher = 0, category = 0, filter = "all" })';
+            }
+    </script>
+<div class="reviews-section">
+    <h3 class="head">Results...</h3>
+    <button type="button" id="btnSearch" data-loading-text="Loading..." class="btn btn-success"
+            autocomplete="off" onclick="listBooks();">
+        List All Books
+    </button>
+    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#myModalAdmin">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    </a>
+
+    <div class="col-md-9 reviews-grids">
+        @foreach (CSW_BOOKS_DCC.Models.Book bo in Model)
+        {
+            <div class="review">
+                <div class="movie-pic">
+                    <a href="#"><img src="~/Images/@bo.Img" alt="" /></a>
+                </div>
+                <div class="review-info">
+                    <a class="span" href="single.html">@bo.Title</a>
+                    @*<p class="ratingview c-rating">Avg Readers' Rating:</p>
+                        <div class="rating c-rating">
+                            <span>☆</span>
+                            <span>☆</span>
+                            <span>☆</span>
+                            <span>☆</span>
+                            <span>☆</span>
+                        </div>
+                        <p class="ratingview c-rating">
+                            &nbsp; 3.3/5
+                        </p>*@
+                    <div class="clearfix"></div>
+                    <div class="yrw">
+                        @*<div class="rtm text-center">
+                                <a href="#">REVIEW THIS MOVIE</a>
+                            </div>*@
+                        <div class="wt text-center">
+                            <a href="#" data-toggle="modal" data-target="#">@bo.ISBN</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <p class="info">YEAR:&nbsp;&nbsp;&nbsp;&nbsp; @bo.Year , EDITION: @bo.Edition</p>
+                    <p class="info">AUTHOR: &nbsp;&nbsp;&nbsp;&nbsp;@foreach (CSW_BOOKS_DCC.Models.Rel_BookAuthor au in bo.Rel_BookAuthor)
+                    {
+                        @au.Author.AuthorName
+                    }</p>
+                    <p class="info">CATEGORY:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@foreach (CSW_BOOKS_DCC.Models.Rel_BookCategory ca in bo.Rel_BookCategory)
+                    {
+                        @ca.Category.CategoryName
+                    }</p>
+                    <p class="info">PUBLISHER:&nbsp;&nbsp;&nbsp; &nbsp; @bo.Publisher.PublisherName</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        }
+    </div>
+
+    <div class="modal fade" id="myModalAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSearch">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabelSearch">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label" >ISBN / Title / Author</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="txtSTitle" placeholder="ISBN / Title / Author">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3" >Publisher</label>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <select id="txtSPublisher" class="custom-select">
+                                            <option value="0" selected>----</option>
+                                            @foreach (CSW_BOOKS_DCC.Models.Publisher s in ViewBag.Publishers)
+                                            {
+                                                <option value="@s.IdPublisher">@s.PublisherName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3" >Category</label>
+                                <div class="col-sm-6">
+                                    <div class="form-check">
+                                        <select id="txtSCategory" class="custom-select">
+                                            <option value="0" selected>----</option>
+                                            @foreach (CSW_BOOKS_DCC.Models.Category c in ViewBag.Categories)
+                                            {
+                                                <option value="@c.IdCategory">@c.CategoryName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <button type="button" id="btnSearch" data-loading-text="Loading..." class="btn btn-primary"
+                                autocomplete="off" onclick="searchBooks();">
+                            Search Book
+                        </button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" >
+                            Close
+                        </button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model CSW_BOOKS_DCC.Models.Book
+@{
+    ViewBag.Title = "CSW - Books - DCC";
+}
+
+<script>
+    $(function () {
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        });
+    });
+</script>
+<div class="header" style="background-image:url(../../Images/1h.jpg)">
+    <div class="top-header">
+        <div class="logo">
+            <a href="index.html"><img src="~/images/books.png" height="50" alt="" /></a>
+            <p style="font-weight:bold">Books</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="header-info2">
+        <div class="modal-body">
+            <div class="container">
+                <form>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label" style="color:white">ISBN / Title / Author</label>
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" id="txtSTitle" placeholder="ISBN / Title / Author">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3" style="color:white">Publisher</label>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <select id="txtSPublisher" class="custom-select">
+                                    <option value="0" selected>----</option>
+                                    @foreach (CSW_BOOKS_DCC.Models.Publisher s in ViewBag.Publishers)
+                                    {
+                                        <option value="@s.IdPublisher">@s.PublisherName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3" style="color:white">Category</label>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <select id="txtSCategory" class="custom-select">
+                                    <option value="0" selected>----</option>
+                                    @foreach (CSW_BOOKS_DCC.Models.Category c in ViewBag.Categories)
+                                    {
+                                        <option value="@c.IdCategory">@c.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btnSearch" data-loading-text="Loading..." class="btn btn-success"
+                    autocomplete="off" onclick="searchBooks();">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <div class="header-info">
+        <p class="age"><a href="#">Recommended</a></p>
+        <h1>@Model.Title</h1>
+        <p class="review">Year	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;  @Model.Year</p>
+        <p class="review">Edition	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;  @Model.Edition</p>
+        <p class="review reviewgo">Publisher	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; @Model.Publisher.PublisherName</p>
+        <p class="review">Author &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 
+        @foreach (CSW_BOOKS_DCC.Models.Rel_BookAuthor au in Model.Rel_BookAuthor)
+        {
+            @au.Author.AuthorName
+        }</p>
+        <p class="review">Category &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 
+        @foreach (CSW_BOOKS_DCC.Models.Rel_BookCategory ca in Model.Rel_BookCategory)
+        {
+            @ca.Category.CategoryName
+        }</p>
+    </div>
+</div>
+
+<div class="review-slider">
+    <ul id="flexiselDemo1">
+        @foreach (string s in ViewBag.MoreBooks)
+            {
+            <li><img id="@s" src="@s" alt="" /></li>
+        }
+    </ul>
+</div>
+

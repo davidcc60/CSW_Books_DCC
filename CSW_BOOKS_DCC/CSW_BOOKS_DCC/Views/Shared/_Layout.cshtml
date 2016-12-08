@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.flexisel.js"></script>
+
+    <script type="text/javascript">
+            function searchBooks() {
+                t = $("#txtSTitle").val();
+                p = $("#txtSPublisher").val()
+                c = $("#txtSCategory").val();
+                location.href = '@Url.Action("SearchBooks", "Home", new { isbn = "_tt", publisher = "_pp", category = "_cc" })'.replace("_tt",t).replace("_pp",p).replace("_cc",c);
+            }
+        function addBooks() {
+            isbn = $("#txtAddISBN").val();
+            title = $("#txtAddTitle").val()
+            year = $("#txtAddYear").val();
+            publisher = $("#txtAddPublisher").val();
+            author = $("#txtAddAuthor").val();
+            category = $("#txtAddCategory").val();
+            location.href = '@Url.Action("AddBooks", "Home", new { isbn = "_ii", title = "_tt", year = "_yy", publisher = "_pp", author = "_aa", category = "_cc" })'.replace("_ii", isbn).replace("_tt", title).replace("_yy", year).replace("_pp", publisher).replace("_aa", author).replace("_cc", category);
+        }
+        function addAuthors() {
+            author = $("#txtAddNewAuthor").val();
+            location.href = '@Url.Action("AddAuthors", "Home", new { author = "_aa" })'.replace("_aa",author);
+        }
+        function addCategories() {
+            category = $("#txtAddNewCategory").val();
+            location.href = '@Url.Action("AddCategories", "Home", new { category = "_cc" })'.replace("_cc", category);
+        }
+        function addPublishers() {
+            publisher = $("#txtAddNewPublisher").val();
+            location.href = '@Url.Action("AddPublishers", "Home", new { publisher = "_pp" })'.replace("_pp", publisher);
+        }
+    </script>
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Book Library", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>*@
+
+        <div class="full">
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a class="active" href="javascript:location.href='@Url.Action("Index", "Home")'">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        </a>
+                    <li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModalAdmin">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="main">
+                @RenderSection("featured", required: false)
+                @RenderBody()
+
+                <div class="footer">
+                    <h6>Author : </h6>
+                    <p class="claim">David Carrera Castillo</p>
+                    <a href="example@mail.com">david_c60@hotmail.com</a>
+                </div>
+
+                <div class="modal fade" id="myModalAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSearch">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabelSearch">Administration</h4>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tabBook" data-toggle="tab">Books</a></li>
+                                    <li><a href="#tabAuthor" data-toggle="tab">Authors</a></li>
+                                    <li><a href="#tabCat" data-toggle="tab">Categories</a></li>
+                                    <li><a href="#tabPublisher" data-toggle="tab">Publishers</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tabBook">
+                                        <div class="container">
+                                            <form>
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">ISBN</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="txtAddISBN" placeholder="ISBN">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Title</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="txtAddTitle" placeholder="Title">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Year</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="number" class="form-control" id="txtAddYear" placeholder="Year">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3">Author</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-check">
+                                                            <select id="txtAddAuthor" class="custom-select">
+                                                                <option value="0" selected>----</option>
+                                                                @foreach (CSW_BOOKS_DCC.Models.Author a in ViewBag.Authors)
+                                                                {
+                                                                    <option value="@a.IdAuthor">@a.AuthorName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3">Publisher</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-check">
+                                                            <select id="txtAddPublisher" class="custom-select">
+                                                                <option value="0" selected>----</option>
+                                                                @foreach (CSW_BOOKS_DCC.Models.Publisher s in ViewBag.Publishers)
+                                                                {
+                                                                    <option value="@s.IdPublisher">@s.PublisherName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3">Category</label>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-check">
+                                                            <select id="txtAddCategory" class="custom-select">
+                                                                <option value="0" selected>----</option>
+                                                                @foreach (CSW_BOOKS_DCC.Models.Category c in ViewBag.Categories)
+                                                                {
+                                                                    <option value="@c.IdCategory">@c.CategoryName</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnAddBook" data-loading-text="Loading..." class="btn btn-primary"
+                                                        autocomplete="off" onclick="addBooks();">
+                                                    Add Book
+                                                </button>
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabAuthor">
+                                        <div class="container">
+                                            <form>
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Author</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="txtAddNewAuthor" placeholder="Name">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnAddAuthor" data-loading-text="Loading..." class="btn btn-primary"
+                                                        autocomplete="off" onclick="addAuthors();">
+                                                    Add Author
+                                                </button>
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabCat">
+                                        <div class="container">
+                                            <form>
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Category</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="txtAddNewCategory" placeholder="Category">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnCategory" data-loading-text="Loading..." class="btn btn-primary"
+                                                        autocomplete="off" onclick="addCategories();">
+                                                    Add Category
+                                                </button>
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane" id="tabPublisher">
+                                        <div class="container">
+                                            <form>
+                                                <div class="form-group row">
+                                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Publisher</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" id="txtAddNewPublisher" placeholder="Name">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="modal-footer">
+                                                <button type="button" id="btnCategory" data-loading-text="Loading..." class="btn btn-primary"
+                                                        autocomplete="off" onclick="addPublishers();">
+                                                    Add Publisher
+                                                </button>
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="modal-footer">
+                                <button type="button" id="btnSearch" data-loading-text="Loading..." class="btn btn-primary"
+                                        autocomplete="off" onclick="">
+                                    Add Book
+                                </button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" >
+                                    Close
+                                </button>
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+            $(window).load(function () {
+             
+                $("#flexiselDemo1").flexisel({
+                    visibleItems: 6,
+				    animationSpeed: 1000,
+				    autoPlay: true,
+				    autoPlaySpeed: 3000,
+				    pauseOnHover: false,
+				    enableResponsiveBreakpoints: true,
+				    responsiveBreakpoints: {
+    					portrait: {
+						    changePoint:480,
+						    visibleItems: 2
+					    },
+					    landscape: {
+    						changePoint:640,
+						    visibleItems: 3
+					    },
+					    tablet: {
+    						changePoint:768,
+						    visibleItems: 4
+					    }
+				    }
+                });
+            });
+    </script>
+</body>
+</html>

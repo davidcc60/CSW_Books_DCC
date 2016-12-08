@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8391111394524438af8a6a620dbcafb2" Name="Diagram1">
+        <EntityTypeShape EntityType="CSW_BooksModel.Author" Width="1.5" PointX="0.875" PointY="4" />
+        <EntityTypeShape EntityType="CSW_BooksModel.Book" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CSW_BooksModel.Category" Width="1.5" PointX="7.125" PointY="1.25" />
+        <EntityTypeShape EntityType="CSW_BooksModel.Publisher" Width="1.5" PointX="0.5" PointY="0.75" />
+        <EntityTypeShape EntityType="CSW_BooksModel.Rel_BookAuthor" Width="1.5" PointX="3.375" PointY="4.25" />
+        <EntityTypeShape EntityType="CSW_BooksModel.Rel_BookCategory" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="CSW_BooksModel.FK_Rel_BookAuthor_Author" />
+        <AssociationConnector Association="CSW_BooksModel.FK_Book_Publisher" />
+        <AssociationConnector Association="CSW_BooksModel.FK_Rel_BookAuthor_Book" />
+        <AssociationConnector Association="CSW_BooksModel.FK_Rel_BookCategorie_Book" />
+        <AssociationConnector Association="CSW_BooksModel.FK_Rel_BookCategorie_Categorie" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
